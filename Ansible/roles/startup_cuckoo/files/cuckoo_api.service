@@ -1,0 +1,13 @@
+[Unit]
+Description=Cuckoo API Service
+After=network.target cuckoo_web.Service
+
+[Service]
+ExecStart=/opt/cuckoo/bin/cuckoo api  --host 192.168.4.101 --port 8090
+Restart=on-failure
+User=cuckoo
+Group=cuckoo
+WorkingDirectory=/home/cuckoo/.cuckoo
+
+[Install]
+WantedBy=multi-user.target

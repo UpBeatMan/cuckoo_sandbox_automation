@@ -1,0 +1,11 @@
+---
+# older volatility apt package (newest 2.6.1)
+
+- name: Install volatility package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: volatility
+    state: present
+    update_cache: false
+    # version 2.5-1

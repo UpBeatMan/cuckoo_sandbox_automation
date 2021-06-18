@@ -1,0 +1,56 @@
+#---
+- name: Add Iptables rule [ 1 / 4 ]
+  become: true
+  become_method: sudo
+  command: "iptables -t nat -A POSTROUTING -o {{ nic }} -s 192.168.56.0/24 -j MASQUERADE"
+
+# Default drop
+- name: Add Iptables rule [ 2 / 4 ]
+  become: true
+  become_method: sudo
+  command: "iptables -P FORWARD DROP"
+
+# Existing connections
+- name: Add Iptables rule [ 3 / 5 ]
+  become: true
+  become_method: sudo
+  command: "iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT"
+
+# Accept connections from vboxnet to the whole internet
+- name: Add Iptables rule [ 4 / 5 ]
+  become: true
+  become_method: sudo
+  command: "iptables -A FORWARD -s 192.168.56.0/24 -j ACCEPT"
+
+# Internal traffic
+- name: Add Iptables rule [ 5 / 5 ]
+  become: true
+  become_method: sudo
+  command: "iptables -A FORWARD -s 192.168.56.0/24 -d 192.168.56.0/24 -j ACCEPT"
+
+# Log stuff, could be noisy
+- name: Add Iptables rule [ opt ]
+  become: true
+  become_method: sudo
+  command: "iptables -A FORWARD -j LOG"
+
+# Enable packet forwarding
+- name: Enable IPv4 forward [ 1 / 2 ]
+  become: true
+  become_method: sudo
+  command: "echo 1 | sudo tee -a /proc/sys/net/ipv4/ip_forward"
+
+- name: Enable IPv4 forward [ 2 / 2 ]
+  become: true
+  become_method: sudo
+  command: "sysctl -w net.ipv4.ip_forward=1"
+
+- name: Allowing Iptables rules to be persistent between reboots [ 1 / 2 ]
+  become: true
+  become_method: sudo
+  command: "netfilter-persistent save"
+
+- name: Allowing Iptables rules to be persistent between reboots [ 2 / 2 ]
+  become: true
+  become_method: sudo
+  command: "netfilter-persistent start"

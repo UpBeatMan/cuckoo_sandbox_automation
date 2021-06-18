@@ -1,0 +1,433 @@
+---
+# Interactive high-level object-oriented language (default version)
+- name: Install python package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python
+    state: present
+    update_cache: false
+
+# pip is a replacement for easy_install
+- name: Install python-pip package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python-pip
+    state: present
+    update_cache: false
+
+# Header files and a static library for Python (default)
+- name: Install python-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python-dev
+    state: present
+    update_cache: false
+
+# Foreign Function Interface library (development files)
+- name: Install libffi-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libffi-dev
+    state: present
+    update_cache: false
+
+# Secure Sockets Layer toolkit (development files)
+- name: Install libssl-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libssl-dev
+    state: present
+    update_cache: false
+
+# POSIX 1003.1e capabilities (utilities)
+- name: Install libcap2-bin package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libcap2-bin
+    state: present
+    update_cache: false
+
+# Python virtual environment creator
+- name: Install python-virtualenv package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python-virtualenv
+    state: present
+    update_cache: false
+
+# Python Distutils Enhancements
+- name: Install python-setuptools package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python-setuptools
+    state: present
+    update_cache: false
+
+# This program allows you to dump the traffic on a network
+- name: Install tcpdump package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: tcpdump
+    state: present
+    update_cache: false
+
+# Utilities for controlling AppArmor
+- name: Install apparmor-utils package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: apparmor-utils
+    state: present
+    update_cache: false
+
+# Independent JPEG Group's JPEG runtime library
+- name: Install libjpeg-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libjpeg-dev
+    state: present
+    update_cache: false
+
+# zlib is a library implementing the deflate compression method (gzip & PKZIP)
+- name: Install zlib1g-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: zlib1g-dev
+    state: present
+    update_cache: false
+
+# SWIG is a compiler that makes it easy to integrate C and C++ code with other languages
+- name: Install swig package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: swig
+    state: present
+    update_cache: false
+
+# Recursive piecewise hashing tool (development headers)
+- name: Install libfuzzy-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libfuzzy-dev
+    state: present
+    update_cache: false
+
+# ssdeep is a tool for recursive computing and matching of Context Triggered
+# Piecewise Hashing (aka Fuzzy Hashing)
+- name: Install ssdeep package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: ssdeep
+    state: present
+    update_cache: false
+
+# Alternative Python package installer (Python 3 version of the package)
+- name: Install python3-pip package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: python3-pip
+    state: present
+    update_cache: false
+
+# Object/document-oriented database (metapackage)
+- name: Install mongodb package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: mongodb
+    state: present
+    update_cache: false
+
+# Object-relational SQL database (supported version)
+- name: Install postgresql package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: postgresql
+    state: present
+    update_cache: false
+
+# Header files for libpq5 (PostgreSQL library)
+- name: Install libpq-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libpq-dev
+    state: present
+    update_cache: false
+
+# Tool for generating GNU Standards-compliant Makefiles
+- name: Install automake package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: automake
+    state: present
+    update_cache: false
+
+# This is GNU libtool, a generic library support script
+- name: Install libtool package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libtool
+    state: present
+    update_cache: false
+
+# GNU Make is a utility which controls the generation of executables
+# and other target files of a program from the program's source files
+- name: Install make package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: make
+    state: present
+    update_cache: false
+
+# This is the GNU C compiler, a fairly portable optimizing compiler for C.
+- name: Install gcc package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: gcc
+    state: present
+    update_cache: false
+
+# Fast lexical analyzer generator
+- name: Install flex package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: flex
+    state: present
+    update_cache: false
+
+# YACC-compatible parser generator
+- name: Install bison package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: bison
+    state: present
+    update_cache: false
+
+# C library for encoding, decoding and manipulating JSON data (dev)
+- name: Install libjansson-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libjansson-dev
+    state: present
+    update_cache: false
+
+# File type determination library using "magic" numbers (development)
+- name: Install libmagic-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libmagic-dev
+    state: present
+    update_cache: false
+
+# Module for manipulating JSON-formatted data
+- name: Install libjson-perl package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libjson-perl
+    state: present
+    update_cache: false
+
+# Fast YAML 1.1 parser and emitter library (development)
+- name: Install libyaml-dev package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libyaml-dev
+    state: present
+    update_cache: false
+
+# Fast YAML 1.1 parser and emitter library (documentation)
+- name: Install libyaml-doc package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libyaml-doc
+    state: present
+    update_cache: false
+
+# Module that implements some sane defaults for Perl programs
+- name: Install libcommon-sense-perl package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libcommon-sense-perl
+    state: present
+    update_cache: false
+
+# Module for manipulating JSON-formatted data (C/XS-accelerated)
+- name: Install libjson-xs-perl package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libjson-xs-perl
+    state: present
+    update_cache: false
+
+# Module providing simple data types for common serialisation formats
+- name: Install libtypes-serialiser-perl package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libtypes-serialiser-perl
+    state: present
+    update_cache: false
+
+# boot-time loader for netfilter rules, iptables plugin
+- name: Install iptables-persistent package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: iptables-persistent
+    state: present
+    update_cache: false
+
+# OpenJDK Development Kit (JDK)
+- name: Install openjdk-8-jdk package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: openjdk-8-jdk
+    state: present
+    update_cache: false
+
+# requirement to install Yara Rules later
+- name: Install pkg-config package
+  become: true
+  become_method: sudo
+  apt:
+    pkg: pkg-config
+    state: present
+    update_cache: false
+
+# PDF report converter
+- name: Install wkhtmltopdf
+  become: true
+  become_method: sudo
+  apt:
+    pkg: wkhtmltopdf
+    state: present
+    update_cache: false
+
+# PDF report: fake X-Server
+- name: Install xvfb
+  become: true
+  become_method: sudo
+  apt:
+    pkg: xvfb
+    state: present
+    update_cache: false
+
+  # PDF report: xfonts-100dpi
+- name: Install 
+  become: true
+  become_method: sudo
+  apt:
+    pkg: xfonts-100dpi
+    state: present
+    update_cache: false
+
+  # Image format converter
+- name: Install tesseract-ocr
+  become: true
+  become_method: sudo
+  apt:
+    pkg: tesseract-ocr
+    state: present
+    update_cache: false
+
+  # perl5 grep util for pydeep
+- name: Install pcregrep
+  become: true
+  become_method: sudo
+  apt:
+    pkg: pcregrep
+    state: present
+    update_cache: false
+
+  # C++ wrapper class for pcre
+- name: Install libpcre++-dev
+  become: true
+  become_method: sudo
+  apt:
+    pkg: libpcre++-dev
+    state: present
+    update_cache: false
+
+  # checksum tool
+- name: Install dh-autoreconf
+  become: true
+  become_method: sudo
+  apt:
+    pkg: dh-autoreconf
+    state: present
+    update_cache: false
+
+# # template
+#   # 
+# - name: Install 
+#   become: true
+#   become_method: sudo
+#   apt:
+#     pkg: 
+#     state: present
+#     update_cache: false
+
+# Guacamole RPP inside the webinterface is not working in cuckoo v2.0.7 (worked in v2.0.6)
+# only combined with nginx engine
+# RDP support plugin for Guacamole
+# - name: Install libguac-client-ssh0 package
+#   become: true
+#   become_method: sudo
+#   apt:
+#     pkg: libguac-client-rdp0
+#     state: present
+#     update_cache: false
+#
+# Guacamole proxy daemon
+# - name: Install guacd package
+#   become: true
+#   become_method: sudo
+#   apt:
+#     pkg: guacd
+#     state: present
+#     update_cache: false
+
+# possible fix for guac - manunal build of the latest version in combination with the non-default Nginx engine
+## NO LIBGUAC-* library should be installed from apt resources
+# sudo apt -y install libcairo2-dev libjpeg-turbo8-dev libpng-dev libossp-uuid-dev libfreerdp-dev
+# mkdir /tmp/guac-build && cd /tmp/guac-build
+# wget http://archive.apache.org/dist/guacamole/0.9.14/source/guacamole-server-0.9.14.tar.gz
+# tar xvf guacamole-server-0.9.14.tar.gz && cd guacamole-server-0.9.14
+# ./configure --with-init-dir=/etc/init.d
+# make && sudo make install && cd ..
+# sudo ldconfig
+# sudo /etc/init.d/guacd start
+
+# startup guac
+# sudo /etc/init.d/guacd start

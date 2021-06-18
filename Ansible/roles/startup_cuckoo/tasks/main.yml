@@ -1,0 +1,85 @@
+---
+- name: Copy cuckoo_rooter startup-script to systemd [ 1 / 4 ]
+  become: true
+  become_method: sudo
+  copy:
+    src: cuckoo_rooter.service
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_fileglop:
+    - ../files/cuckoo_rooter.service
+
+- name: Copy cuckoo startup-script to systemd [ 2 / 4 ]
+  become: true
+  become_method: sudo
+  copy:
+    src: cuckoo.service
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_fileglop:
+    - ../files/cuckoo.service
+
+- name: Copy cuckoo_web startup-script to systemd [ 3 / 4 ]
+  become: true
+  become_method: sudo
+  copy:
+    src: cuckoo_web.service
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_fileglop:
+    - ../files/cuckoo_web.service
+
+- name: Copy cuckoo_api startup-script to systemd [ 4 / 4 ]
+  become: true
+  become_method: sudo
+  copy:
+    src: cuckoo_api.service
+    dest: "/etc/systemd/system"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_fileglop:
+    - ../files/cuckoo_api.service
+
+- name: Start and enable cuckoo_router systemd service [ 1 / 4 ]
+  become: true
+  become_method: sudo
+  systemd:
+    name: cuckoo_router.service
+    state: started
+    enabled: yes
+
+- name: Start and enable cuckoo systemd service [ 2 / 4 ]
+  become: true
+  become_method: sudo
+  systemd:
+    name: cuckoo.service
+    state: started
+    enabled: yes
+
+- name: Start and enable cuckoo_web systemd service [ 3 / 4 ]
+  become: true
+  become_method: sudo
+  systemd:
+    name: cuckoo_web.service
+    state: started
+    enabled: yes
+
+- name: Start and enable cuckoo_api systemd service [ 4 / 4 ]
+  become: true
+  become_method: sudo
+  systemd:
+    name: cuckoo_api.service
+    state: started
+    enabled: yes
+
+# Change startup notification
+- name: Set up done
+  debug:
+    msg: Setup is done. Peekaboo is now started and ready. Happy Analyzing!

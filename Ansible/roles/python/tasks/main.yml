@@ -1,0 +1,11 @@
+---
+# if python 2.7 is not installed, you have to run it before running the playbook
+- name: Verify if Python is installed
+  shell: python --version
+  register: python_version
+
+# raw module doesn't require python on the remote system
+# Checks if "python" (Python 2.7) is installed and if file /usr/bin/python exists or installs python-minimal
+- name: Install python 2
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  when: python_version.stdout[:5] == "Python 2"

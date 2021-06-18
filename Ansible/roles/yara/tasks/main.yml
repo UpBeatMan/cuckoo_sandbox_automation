@@ -1,0 +1,50 @@
+---
+- name: Download Yara source
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  get_url:
+    url: https://github.com/VirusTotal/yara/archive/v{{ yara_ver }}.tar.gz
+    dest: "{{ build_dir }}"
+    mode: '0644'
+    force: true
+
+- name: Uncompress Yara source
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  unarchive:
+    src: "{{build_dir}}/yara-{{ yara_ver }}.tar.gz"
+    dest: "{{ build_dir }}"
+    remote_src: true
+
+- name: Bootstrap Yara
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  shell: ./bootstrap.sh
+  args:
+    chdir: "{{ build_dir }}/yara-{{ yara_ver }}"
+
+- name: Configure Yara
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  shell: "./configure --with-crypto --enable-cuckoo --enable-magic"
+  args:
+    chdir: "{{ build_dir }}/yara-{{ yara_ver }}"
+
+- name: Compile Yara
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  shell: make
+  args:
+    chdir: "{{ build_dir }}/yara-{{ yara_ver }}"
+
+- name: Install Yara
+  become: true
+  become_method: sudo
+  shell: make install
+  args:
+    chdir: "{{ build_dir }}/yara-{{ yara_ver }}"

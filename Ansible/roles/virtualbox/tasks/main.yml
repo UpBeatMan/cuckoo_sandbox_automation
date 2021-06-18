@@ -1,0 +1,32 @@
+---
+# old version of virtualbox is required - v5.2.44
+
+- name: Add virtualbox APT key
+  become: true
+  become_method: sudo
+  apt_key:
+    url: "https://www.virtualbox.org/download/oracle_vbox_2016.asc"
+    state: present
+
+- name: Add virtualbox repository
+  become: true
+  become_method: sudo
+  apt_repository:
+    repo: deb http://download.virtualbox.org/virtualbox/debian xenial contrib
+    state: present
+    update_cache: false
+
+# sudo apt update role
+- name: Update apt-get repo and cache
+  apt: 
+    update_cache: yes 
+    force_apt_get: yes 
+    cache_valid_time: 3600
+
+- name: Install virtualbox v5.2.44
+  become: true
+  become_method: sudo
+  apt:
+    pkg: virtualbox-5.2
+    state: present
+    update_cache: false

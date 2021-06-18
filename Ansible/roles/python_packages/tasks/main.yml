@@ -1,0 +1,80 @@
+###################################
+- name: Upgrade python-pip (Python2) to latest version
+  become: true
+  become_method: sudo
+  #become_user: "{{ cuckoo_user }}"
+  command: "pip install --upgrade pip"
+  #command: "/opt/cuckoo/bin/python2 -m pip install --upgrade pip"
+###################################
+
+- name: Install pydeep
+  become: true
+  become_method: sudo
+  pip:
+    name: pydeep
+    state: latest
+    # version 0.4
+
+- name: Install distorm3
+  become: true
+  become_method: sudo
+  pip:
+    name: distorm3
+    state: latest
+    # version: 3.5
+
+- name: Install psycopg2 
+  become: true
+  become_method: sudo
+  pip:
+    name: psycopg2
+    state: latest
+    # version: 2.8.6
+
+- name: Install cairocffi
+  become: true
+  become_method: sudo
+  pip:
+    name: cairocffi
+    state: latest
+    # version: 0.9.0
+
+- name: Install weasyprint
+  become: true
+  become_method: sudo
+  pip:
+    name: weasyprint==0.36
+
+- name: Install m2crypto
+  become: true
+  become_method: sudo
+  pip:
+    name: m2crypto==0.24.0
+
+- name: Install pillow
+  become: true
+  become_method: sudo
+  pip:
+    name: pillow==6.2.2
+
+# Windows Guest VM Creation
+# - name: Install VMCloak
+#   become: true
+#   become_method: sudo
+#   pip:
+#     name: vmcloak
+#     state: latest
+#     # version: 0.4.8
+
+##Install the latest vmcloak inside the virtualenv
+# sudo pip install vmcloak --upgrade
+##Mount the Windows 7 Installer ISO.
+# sudo mkdir -p /mnt/win7
+# sudo mount -o loop,ro win7.iso /mnt/win7
+##Ensure the hostonly adapter is up.
+##script
+# vmcloak-vboxnet0
+##or manual
+#VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
+##Actually initialize the 64-bit Windows 7 VM.
+# vmcloak init --verbose --win7x64 win7x64base --cpus 2 --ramsize 2048 --iso-mount /mnt/win7 

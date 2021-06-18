@@ -1,0 +1,44 @@
+#both run setup require ssh key authentication
+#cuckoo
+# ansible-playbook -i /Ansible/inventories/production /Ansible/site.yml
+# ansible-playbook -i /Ansible/inventories/staging /Ansible/site.yml
+
+# configure cuckoo template
+#cuckootest (local)
+# sudo curl -XPUT -H 'Content-Type: application/json' 'http://192.168.4.101:9200/_template/cuckoo' -d@'/home/cuckoo/.cuckoo/elasticsearch/template.json'
+#oder auch möglich
+# sudo curl -XPUT -H 'Content-Type: application/json' 'http://127.0.0.1:9200/_template/cuckoo' -d@'/home/cuckoo/.cuckoo/elasticsearch/template.json'
+
+#startup vboxnet0 hostonly adapter
+# VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
+
+#startup cuckoo rooter
+# cuckoo rooter --sudo --group cuckoo
+
+#startup cuckoo
+# cuckoo -d -m 10000
+
+#startup cuckoo web interface
+
+#cuckootest (local)
+# cuckoo web --host 192.168.4.101 --port 8080
+
+---
+- hosts: all 
+  gather_facts: false
+  roles:
+  - python
+  - cuckoo_user
+  - build_directory
+  - ubuntu_packages
+  - virtualbox
+  - python_packages
+  - postgresql
+  - elasticsearch
+  - cuckoo
+  - yara
+  - volatility
+  - tor
+  - inetsim
+  - network
+  - startup_cuckoo

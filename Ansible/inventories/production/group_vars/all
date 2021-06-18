@@ -1,0 +1,45 @@
+---
+#### Cuckoo Sandbox artifacts ####
+
+### Distro ###
+# code name for Ubuntu:
+# 16.04 = xenial
+# 18.04 = bionic
+# 19.04 = disco
+# 20.04 = bionic
+
+# Used in TOR config
+distribution: xenial
+
+# IP
+# deleted ip
+ip_address: 192.168.4.101
+
+# User
+cuckoo_user: cuckoo
+
+### Network cards ###
+# deleted <insert domain name>
+nic: enp0s25
+
+# Folders
+cwd: ~/.cuckoo
+build_dir: /usr/local/src/build
+
+# Virtual environment
+cuckoo_dir: /opt/cuckoo
+
+#### Module versions #############
+
+cuckoo_ver: 2.0.7
+yara_ver: 4.0.2
+volatility_ver: 2.5
+
+# adapt playbook to use virtualbox versions
+#virtualbox_ver: 5.2.44
+
+### Guest VM artifacts ###
+cuckoo_vm_label: cuckoo1
+
+### Locals ###
+timezone: Europe/Berlin

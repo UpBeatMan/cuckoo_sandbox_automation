@@ -1,0 +1,229 @@
+---
+- name: Install pip into virtual environment - {{ cuckoo_dir }}
+  become: true
+  become_method: sudo
+  pip:
+    name: pip
+    version: 20.3.3
+    virtualenv: "{{ cuckoo_dir }}"
+
+- name: Install cuckoo into virtual environment - {{ cuckoo_dir }}
+  become: true
+  become_method: sudo
+  pip:
+    name: setuptools<45.0.0, psycopg2, urllib3, cuckoo, pydeep, distorm3, cairocffi, weasyprint==0.36, m2crypto==0.24.0, pillow==6.2.2
+    # setuptoools package management | psycopg2 postgres adapter | urlib3 HTTP Library | pydeep for ssdeep | distorm3 x86/amd64 decoder | cairocffi cairo graphics | weasyprint html2pdf export | m2crypto crypto & ssl toolkit | pillow imaging library
+    state: latest
+    virtualenv: "{{ cuckoo_dir }}"
+
+- name: Change owner of {{ cuckoo_dir }} directory
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ cuckoo_dir }}"
+    state: directory
+    owner: "{{ cuckoo_user }}"
+    group: "{{ cuckoo_user }}"
+    recurse: true
+
+# indempotent-concern: try to replace it for a role instead of a command
+- name: Setup cuckoo working directory - {{ cwd }}
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "{{ cuckoo_dir }}/bin/cuckoo --cwd {{ cwd }}"
+  failed_when: result.rc != 1 and result.rc != 0
+  register: result 
+
+####################################
+# change the backup way to something
+# more robust and size efficient
+
+# not idempotent
+# Backup files before run
+- name: Backup auxiliary.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/auxiliary.conf {{ cwd }}/conf/auxiliary.conf.original"
+
+- name: Backup avd.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/avd.conf {{ cwd }}/conf/avd.conf.original"
+
+- name: Backup cuckoo.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/cuckoo.conf {{ cwd }}/conf/cuckoo.conf.original"
+
+- name: Backup esx.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/esx.conf {{ cwd }}/conf/esx.conf.original"
+
+- name: Backup kvm.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/kvm.conf {{ cwd }}/conf/kvm.conf.original"
+
+- name: Backup memory.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/memory.conf {{ cwd }}/conf/memory.conf.original"
+
+- name: Backup physical.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/physical.conf {{ cwd }}/conf/physical.conf.original"
+
+- name: Backup processing.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/processing.conf {{ cwd }}/conf/processing.conf.original"
+
+- name: Backup qemu.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/qemu.conf {{ cwd }}/conf/qemu.conf.original"
+
+- name: Backup reporting.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/reporting.conf {{ cwd }}/conf/reporting.conf.original"
+
+- name: Backup routing.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/routing.conf {{ cwd }}/conf/routing.conf.original"
+
+- name: Backup virtualbox.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/virtualbox.conf {{ cwd }}/conf/virtualbox.conf.original"
+
+- name: Backup vmware.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/vmware.conf {{ cwd }}/conf/vmware.conf.original"
+
+- name: Backup vsphere.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/vsphere.conf {{ cwd }}/conf/vsphere.conf.original"
+
+- name: Backup xenserver.conf file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cwd }}/conf/xenserver.conf {{ cwd }}/conf/xenserver.conf.original"
+
+- name: Backup vsphere.py file
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "cp {{ cuckoo_dir }}/lib/python2.7/site-packages/cuckoo/machinery/vsphere.py {{ cuckoo_dir }}/lib/python2.7/site-packages/cuckoo/machinery/vsphere.py.original"
+
+- name: Backup limits.conf file
+  become: true
+  become_method: sudo
+  command: "cp /etc/security/limits.conf /etc/security/limits.conf.original"
+
+- name: Backup sysctl.conf file
+  become: true
+  become_method: sudo
+  command: "cp /etc/sysctl.conf /etc/sysctl.conf.original"
+
+###################################
+
+# Increase max open file limit with new sysctl.conf and limits.conf
+- name: Copy local limits.conf file
+  become: true
+  become_method: sudo
+  copy:
+    src: "limits.conf"
+    dest: "/etc/security/"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: Copy local sysctl.conf file
+  become: true
+  become_method: sudo
+  copy:
+    src: "sysctl.conf"
+    dest: "/etc/"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+# Shell has environment var but is less secure then command (use roles!)
+- name: Updating systemctl with new configuration
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  shell: sysctl -p
+
+# Replace default cuckoo config files with customized ones
+- name: Copy local Cuckoo configuration files to {{ cwd }}/conf
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ cwd }}/conf"
+    owner: "{{ cuckoo_user }}"
+    group: "{{ cuckoo_user }}"
+    mode: 0644
+  with_fileglob:
+    - ../files/*.conf
+
+- name: Removing limits.conf from Cuckoo CWD
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  file:
+     state: absent
+     path: "{{ cwd }}/conf/limits.conf"
+
+- name: Removing sysctl.conf from Cuckoo CWD
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  file:
+     state: absent
+     path: "{{ cwd }}/conf/sysctl.conf"
+
+- name: Install Cuckoo signature modules
+  become: true
+  become_method: sudo
+  become_user: "{{ cuckoo_user }}"
+  command: "{{ cuckoo_dir }}/bin/cuckoo community"
+  failed_when: result.rc != 1 and result.rc != 0
+  register: result
+
+# indempotent-concern: try to replace it for a role instead of a command
+- name: Disable AppArmor profile for tcpdump in Ubuntu
+  become: true
+  become_method: sudo
+  shell: aa-disable /usr/sbin/tcpdump
+  ignore_errors: true
+
+# indempotent-concern: try to replace it for a role instead of a command
+- name: Set specific Linux capabilities to the Tcpdump binary
+  become: true
+  become_method: sudo
+  shell: setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
